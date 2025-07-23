@@ -149,6 +149,15 @@
                     content: content,
                     id: Date.now()
                 });
+
+                // clean up
+                document.getElementById('sectionTitle').value='';
+                document.getElementById('sectionContent').value='';
+                updateSectionList();
+                console.log('section joy:', writeupData.sections);
+            } else{
+                // add more logging? -jlahire
+                alert('enter title + content')
             }
         }
 
