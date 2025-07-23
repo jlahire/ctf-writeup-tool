@@ -17,7 +17,7 @@ The primary purpose of this project is to create a writeup web app I can use to 
 <img src="assets/wireframe/4.jpg" alt="Writeup" width="250"/><br>
 
 ## Files
-
+```text
 |-- README.md
 |-- assets
 |   `-- wireframe
@@ -28,3 +28,4 @@ The primary purpose of this project is to create a writeup web app I can use to 
 `-- index.html
 
 2 directories, 6 files
+```
