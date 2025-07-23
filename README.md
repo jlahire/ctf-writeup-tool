@@ -16,10 +16,17 @@ The primary purpose of this project is to create a writeup web app I can use any
 <h4>Review</h4>
 <img src="assets/wireframe/4.jpg" alt="Writeup" width="250"/><br>
 
+## DevLog
+
+<h4>Data Collection + Persistence</h4>
+<img src="assets\examples\input_log_persistence.gif" alt="Data Collection + Persistence" width="250"/><br>
+
 ## Files
 ```text
 |-- README.md
 |-- assets
+|   |-- examples
+|   |   `-- input_log_persistence.gif
 |   `-- wireframe
 |       |-- 1.jpg
 |       |-- 2.jpg
@@ -27,5 +34,5 @@ The primary purpose of this project is to create a writeup web app I can use any
 |       `-- 4.jpg
 `-- index.html
 
-2 directories, 6 files
+3 directories, 7 files
 ```
