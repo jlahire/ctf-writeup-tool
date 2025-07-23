@@ -50,23 +50,23 @@
 
             <div id="writeupContent"style="display: none">
                 <div class="bg-white p-6 rounded-lg shadow border">
-                    <h2 class="text-xl font-bold text-gray-900 mb-4">What & How</h2>
+                    <h2 class="text-xl font-bold text-gray-900 mb-4">How</h2>
                     <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font medium text-gray-700 mb-2">Section Title</label>
-                                <input type="text" id="sectionTitle" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="ex: Recon">
-                            </div>
-                            <div>
-                                <label class="block text-sm font medium text-gray-700 mb-2">Content</label>
-                                <textarea id="" rows="" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="ex: Used nmap to scan ports of x.x.x.x/24 and got x result.."></textarea>
-                            </div>
-                            <button id="addSectionBtn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">+ section</button>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Section Title</label>
+                            <input type="text" id="sectionTitle" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="ex: Recon">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Content</label>
+                            <textarea id="sectionContent" rows="6" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="ex: Used nmap to scan ports of x.x.x.x/24 and got x result.."></textarea>
+                        </div>
+                        <button id="addSectionBtn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">+ section</button>
                     </div>
                 </div>
                 <!current sections>
-                <div id="" class="" style="" >
-                    <h3 class=""></h3>
-                    <div id=""></div>
+                <div id="sectionsList" class="bg-white p-6 rounded-lg shadow border" style="display: none;" >
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Current Sections</h3>
+                    <div id="sectionsContainer"></div>
                 </div>
             </div>     
 
@@ -136,6 +136,21 @@
             document.getElementById('points').addEventListener('input', collectBasicInfo);
 
         });
+
+        // sections
+        function addSection(){
+            const title = document.getElementById('sectionTitle').value.trim();
+            const content = document.getElementById('sectionContent').value.trim();
+
+            // writeup sections and add date/tiem
+            if (title && content){
+                writeupData.sections.push({
+                    title: title,
+                    content: content,
+                    id: Date.now()
+                });
+            }
+        }
 
     </script>
 </body>
