@@ -51,5 +51,34 @@
         </div>
         <h2 class="text-xl text-gray-800">placeholder footer</h2>
     </main>
+
+    <!tab switching>
+    <script>
+        function showTab(tabName){
+            // hide content
+            document.getElementById('basicContent').style.display = 'none';
+            document.getElementById('writeupContent').style.display = 'none';
+            document.getElementById('toolsContent').style.display = 'none';
+            document.getElementById('reviewContent').style.display = 'none';
+
+            // reset tabs
+            const tabs = ['basicTab', 'writeupTab', 'toolsTab', 'reviewTab'];
+            tabs.forEach(tab => {
+                document.getElementById(tab).className = 'py-2 px-1 border-b-2 border-blue-500 text-blue-600 font-medium text-sm';
+            })
+        
+            // active tab & show content
+            document.getElementById(tabName + 'Content').style.display = 'block';
+            document.getElementById(tabName + 'Tab').className = 'py-2 px-1 border-b-2 border-blue-500 text-blue-600 font-medium text-sm'
+        }
+        // listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('basicTab').addEventListener('click', () => showTab('basic'));
+            document.getElementById('writeupTab').addEventListener('click', () => showTab('writeup'));
+            document.getElementById('toolsTab').addEventListener('click', () => showTab('tools'));
+            document.getElementById('reviewTab').addEventListener('click', () => showTab('review'));
+
+        });
+    </script>
 </body>
 </html>
