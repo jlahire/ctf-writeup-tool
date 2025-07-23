@@ -48,17 +48,17 @@
                 </div>
             </div>
 
-            <div id="writeupContent">
+            <div id="writeupContent"style="display: none">
                 <h2>Writeup</h2>
                 <p>TBA</p>
             </div>     
 
-            <div id="toolsContent">
+            <div id="toolsContent"style="display: none">
                 <h2>Tools & Resources</h2>
                 <p>TBA</p>
             </div>     
 
-            <div id="reviewContent">
+            <div id="reviewContent"style="display: none">
                 <h2>Export & Review</h2>
                 <p>TBA</p>
             </div>
@@ -71,10 +71,10 @@
     <script>
         function showTab(tabName){
             // hide content
-            document.getElementById('basicContent').style.display = 'none';
-            document.getElementById('writeupContent').style.display = 'none';
-            document.getElementById('toolsContent').style.display = 'none';
-            document.getElementById('reviewContent').style.display = 'none';
+            document.getElementById('basicContent').style="display: none";
+            document.getElementById('writeupContent').style="display: none";
+            document.getElementById('toolsContent').style="display: none";
+            document.getElementById('reviewContent').style="display: none";
 
             // reset tabs
             const tabs = ['basicTab', 'writeupTab', 'toolsTab', 'reviewTab'];
