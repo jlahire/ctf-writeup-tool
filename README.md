@@ -1,6 +1,6 @@
 # Lahire CTF Writeup Tool
 
-The primary purpose of this project is to create a writeup web app I can use to keep track of CTF progress and easily share my successes and failures with others. The secondary purpose is to showcase taking an idea and building it.
+The primary purpose of this project is to create a writeup web app I can use anywhere and on any device to keep track of CTF progress and easily share my successes and failures with others. The secondary purpose is to showcase taking an idea and building it.
 
 ## Design
 
