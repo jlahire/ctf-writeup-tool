@@ -86,14 +86,7 @@
             document.getElementById(tabName + 'Content').style.display = 'block';
             document.getElementById(tabName + 'Tab').className = 'py-2 px-1 border-b-2 border-blue-500 text-blue-600 font-medium text-sm'
         }
-        // listeners
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('basicTab').addEventListener('click', () => showTab('basic'));
-            document.getElementById('writeupTab').addEventListener('click', () => showTab('writeup'));
-            document.getElementById('toolsTab').addEventListener('click', () => showTab('tools'));
-            document.getElementById('reviewTab').addEventListener('click', () => showTab('review'));
 
-        });
         // data collection
         let writeupData = {
             basicInfo: {},
@@ -101,6 +94,32 @@
             toosl: [],
             references: []
         };
+
+        function collectBasicInfo(){
+            writeupData.basicInfo = {
+                event: document.getElementById('ctfEvent').value,
+                challenge: document.getElementById('challenge').value,
+                points: document.getElementById('points').value,
+            };
+            console.log('Solid joy:', writeupData.basicInfo);
+        }
+
+        // listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // tabs
+            document.getElementById('basicTab').addEventListener('click', () => showTab('basic'));
+            document.getElementById('writeupTab').addEventListener('click', () => showTab('writeup'));
+            document.getElementById('toolsTab').addEventListener('click', () => showTab('tools'));
+            document.getElementById('reviewTab').addEventListener('click', () => showTab('review'));
+            
+            // data collection listener
+            document.getElementById('ctfEvent').addEventListener('input', collectBasicInfo);
+            document.getElementById('challenge').addEventListener('challenge', collectBasicInfo);
+            document.getElementById('points').addEventListener('points', collectBasicInfo);
+
+        });
+
     </script>
 </body>
 </html>
