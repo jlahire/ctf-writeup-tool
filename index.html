@@ -67,10 +67,10 @@
         <h2 class="text-xl text-gray-800">placeholder footer</h2>
     </main>
 
-    <!tab switching>
+    <!tab stuff>
     <script>
+        // hide content
         function showTab(tabName){
-            // hide content
             document.getElementById('basicContent').style="display: none";
             document.getElementById('writeupContent').style="display: none";
             document.getElementById('toolsContent').style="display: none";
@@ -94,6 +94,13 @@
             document.getElementById('reviewTab').addEventListener('click', () => showTab('review'));
 
         });
+        // data collection
+        let writeupData = {
+            basicInfo: {},
+            sections: [],
+            toosl: [],
+            references: []
+        };
     </script>
 </body>
 </html>
