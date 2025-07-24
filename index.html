@@ -199,7 +199,7 @@
                 document.getElementById('sectionTitle').value='';
                 document.getElementById('sectionContent').value='';
                 updateSectionsList();
-                console.log('section joy:', writeupData.sections);
+                console.log('sec joy:', writeupData.sections);
             } else{
                 // add more logging? -jlahire
                 alert('enter title + content')
@@ -242,15 +242,15 @@
         // tools
         function addTool(){
             const name = document.getElementById('toolName').value.trim();
-            const content = document.getElementById('toolContent').value.trim();
             const url = document.getElementById('toolUrl').value.trim();
+            const content = document.getElementById('toolContent').value.trim();
 
             // writeup tools and add date/tiem
-            if (name && content && url){
+            if (name && url && content){
                 writeupData.tools.push({
                     name: name,
-                    content: content,
                     url: url,
+                    content: content,
                     id: Date.now()
                 });
 
@@ -298,6 +298,67 @@
 
         // load
         document.getElementById('addToolBtn').addEventListener('click', addTool);
+
+
+        // resources
+        function addRes(){
+            const name = document.getElementById('resName').value.trim();
+            const url = document.getElementById('resUrl').value.trim();
+            const content = document.getElementById('resContent').value.trim();
+
+            // writeup resources and add date/tiem
+            if (name && url && content){
+                writeupData.resources.push({
+                    name: name,
+                    url: url,
+                    content: content,
+                    id: Date.now()
+                });
+
+                // clean up
+                document.getElementById('resName').value='';
+                document.getElementById('resContent').value='';
+                document.getElementById('resUrl').value='';
+                updateResList();
+                console.log('res joy:', writeupData.resources);
+            } else{
+                // add more logging? -jlahire
+                alert('enter resource content')
+            }
+        }
+
+        function updateResList(){
+            // shows res if exists, hides if not
+            const resContainer = document.getElementById('resContainer');
+            const resList = document.getElementById('resList');
+            // show
+            if (writeupData.resources.length > 0){
+                resList.style.display = 'block';
+                resContainer.innerHTML = writeupData.resources.map((resources, index) => `
+                    <div class="border border-gray-200 rounded-lg p-4 mb-3">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-semibold text-gray-800">${resources.name}</h4>
+                                <p class="text-sm text-gray-600 mt-1">${resources.content.substring(0, 100)}${resources.content.length > 100 ? '...' : ''}</p>
+                            </div>
+                            <button onclick="removeRes(${index})" class="text-red-500 hover:text-red-700 text-sm">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+            // hide
+            resList.style.display = 'none';
+            }
+        }
+
+        // delete tol
+        function removeRes(index){
+            writeupData.resources.splice(index, 1);
+            updateResList();
+        }
+
+        // load
+        document.getElementById('addResBtn').addEventListener('click', addRes);
 
     </script>
 </body>
