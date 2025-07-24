@@ -120,9 +120,17 @@
                 </div>
             </div>
 
-            <div id="reviewContent"style="display: none">
-                <h2>Export & Review</h2>
-                <p>TBA</p>
+            <div id="reviewContent" class="space-y-6" style="display: none">
+                <div class="bg-white p-6 rounded-lg shadow border">
+                    <h2 class="text-xl font-bold text-gray-900 mb-4">Export & Review</h2>
+                    <button onclick="updatePreview()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors mb-4">Update Preview</button>
+                    <!preview>
+                    <div id="pdfPreview" class="border border-gray-300 rounded-lg p-8 bg-white">
+                        <div class="text-center text-gray-400">
+                            <p>hit button to preview writeup</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -290,7 +298,7 @@
             }
         }
 
-        // delete tol
+        // delete tool
         function removeTool(index){
             writeupData.tools.splice(index, 1);
             updateToolsList();
@@ -351,7 +359,7 @@
             }
         }
 
-        // delete tol
+        // delete res
         function removeRes(index){
             writeupData.resources.splice(index, 1);
             updateResList();
@@ -359,6 +367,56 @@
 
         // load
         document.getElementById('addResBtn').addEventListener('click', addRes);
+
+        // preview
+        function updatePreview() {
+            const preview = document.getElementById('pdfPreview');
+            const data = writeupData.basicInfo;
+            
+            let secHTML = '';
+            if (writeupData.sections.length > 0) {
+                secHTML = `
+                    <div class="mb-6">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">Methodology</h2>
+                        ${writeupData.sections.map(section => `
+                            <div class="mb-4">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">${section.title}</h3>
+                                <div class="text-gray-700 whitespace-pre-wrap">${section.content}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="mb-6">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">Tools</h2>
+                        ${writeupData.tools.map(tools => `
+                            <div class="mb-4">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">${tools.name}</h3>
+                                <div class="text-gray-700 whitespace-pre-wrap">${tools.url}</div>
+                                <div class="text-gray-700 whitespace-pre-wrap">${tools.content}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="mb-6">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">Resources</h2>
+                        ${writeupData.resources.map(resources => `
+                            <div class="mb-4">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">${resources.name}</h3>
+                                <div class="text-gray-700 whitespace-pre-wrap">${resources.url}</div>
+                                <div class="text-gray-700 whitespace-pre-wrap">${resources.content}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            preview.innerHTML = `
+                <div class="text-center mb-8 border-b-2 border-gray-200 pb-6">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">${data.challenge || 'Challenge'}</h1>
+                    <div class="text-lg text-gray-600 mb-2">${data.event || 'Event'}</div>
+                    <div class="text-sm text-gray-500">Points: ${data.points || 'pts'}</div>
+                </div>
+                ${secHTML}
+            `;
+        }
 
     </script>
 </body>
