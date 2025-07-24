@@ -67,6 +67,13 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">Content</label>
                             <textarea id="sectionContent" rows="6" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="ex: Decided to google the organization and see what was available through basic OSINT..."></textarea>
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Image</label>
+                            <input type="file" id="sectionImage" accept="image/*" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <div id="imagePreview" class="mt-2 hidden">
+                                <img id="previewImg" src="" alt="Preview" class="max-w-xs h-auto border rounded">
+                            </div>
+                        </div>
                         <button id="addSectionBtn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">+ section</button>
                     </div>
                 </div>
@@ -205,25 +212,59 @@
         function addSection(){
             const title = document.getElementById('sectionTitle').value.trim();
             const content = document.getElementById('sectionContent').value.trim();
+            const imageFile = document.getElementById('sectionImage').files[0];
 
             // writeup sections and add date/tiem
             if (title && content){
-                writeupData.sections.push({
+                const section = {
                     title: title,
                     content: content,
                     id: Date.now()
-                });
+                };
+
+                if (imageFile){
+                    const imgHandler = new FileReader();
+                    imgHandler.onload = function(e){
+                        section.image = e.target.result;
+                        section.imageName = imageFile.name;
+                        writeupData.sections.push(section);
+                        updateSectionsList();
+                        console.log('img joy: ', writeupData.sections);
+                    };
+                    imgHandler.readAsDataURL(imageFile);
+                } else {
+                    writeupData.sections.push(section);
+                    updateSectionsList();
+                    console.log('sec joy: ', writeupData.sections);
+                }
 
                 // clean up
                 document.getElementById('sectionTitle').value='';
                 document.getElementById('sectionContent').value='';
-                updateSectionsList();
-                console.log('sec joy:', writeupData.sections);
+                document.getElementById('sectionImage').value='';
+                document.getElementById('imagePreview').classList.add('hidden');
             } else{
                 // add more logging? -jlahire
                 alert('enter title + content')
             }
         }
+
+        // image preview
+        document.getElementById('sectionImage').addEventListener('change', function(e){
+            const file = e.target.files[0];
+            const preview = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImg');
+            if (file){
+                const imgHandler = new FileReader();
+                imgHandler.onload = function(e){
+                    previewImg.src = e.target.result;
+                    preview.classList.remove('hidden');
+                };
+                imgHandler.readAsDataURL(file);
+            } else{
+                preview.classList.add('hidden');
+            }
+        });
 
         function updateSectionsList(){
             // shows section if exists, hides if not
@@ -238,6 +279,7 @@
                             <div>
                                 <h4 class="font-semibold text-gray-800">${section.title}</h4>
                                 <p class="text-sm text-gray-600 mt-1">${section.content.substring(0, 100)}${section.content.length > 100 ? '...' : ''}</p>
+                                ${section.image ? `<div class="mt-2><img src="${section.image}" alt="${section.imageName}" class="max-w-xs h-auto border rounded"></div>` :''}
                             </div>
                             <button onclick="removeSection(${index})" class="text-red-500 hover:text-red-700 text-sm">Delete</button>
                         </div>
@@ -379,7 +421,7 @@
         // load
         document.getElementById('addResBtn').addEventListener('click', addRes);
 
-        // preview
+        // preview writeup
         function updatePreview() {
             const preview = document.getElementById('pdfPreview');
             const data = writeupData.basicInfo;
@@ -393,6 +435,7 @@
                             <div class="mb-4">
                                 <h3 class="text-lg font-semibold text-gray-800 mb-2">${section.title}</h3>
                                 <div class="text-gray-700 whitespace-pre-wrap">${section.content}</div>
+                                ${section.image ? `<div class="mt-2"><img src="${section.image}" alt="${section.imageName}" class="max-w-xs h-auto border rounded"></div>` :''}
                             </div>
                         `).join('')}
                     </div>
@@ -425,6 +468,7 @@
                     <div class="text-lg text-gray-600 mb-2">${data.event || 'Event'}</div>
                     <div class="text-sm text-gray-500">Difficulty: ${data.difficulty || 'pts'}</div>
                     <div class="text-sm text-gray-500">Author: ${data.author || 'unk'}</div>
+                    <div class="text-sm text-gray-500">Date: ${new Date().toLocaleString()}</div>
                 </div>
                 ${secHTML}
             `;
