@@ -153,13 +153,46 @@
                 // clean up
                 document.getElementById('sectionTitle').value='';
                 document.getElementById('sectionContent').value='';
-                updateSectionList();
+                updateSectionsList();
                 console.log('section joy:', writeupData.sections);
             } else{
                 // add more logging? -jlahire
                 alert('enter title + content')
             }
         }
+
+        function updateSectionsList(){
+            // shows section if exists, hides if not
+            const container = document.getElementById('sectionsContainer');
+            const sectionsList = document.getElementById('sectionsList');
+            // show
+            if (writeupData.sections.length > 0){
+                sectionsList.style.display = 'block';
+                container.innerHTML = writeupData.sections.map((section, index) => `
+                    <div class="border border-gray-200 rounded-lg p-4 mb-3">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-semibold text-gray-800">${section.title}</h4>
+                                <p class="text-sm text-gray-600 mt-1">${section.content.substring(0, 100)}${section.content.length > 100 ? '...' : ''}</p>
+                            </div>
+                            <button onclick="removeSection(${index})" class="text-red-500 hover:text-red-700 text-sm">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+            // hide
+            sectionsList.style.display = 'none';
+            }
+        }
+
+        // delete section
+        function removeSection(index){
+            writeupData.sections.splice(index, 1);
+            updateSectionsList();
+        }
+
+        // load
+        document.getElementById('addSectionBtn').addEventListener('click', addSection);
 
     </script>
 </body>

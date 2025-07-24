@@ -21,6 +21,9 @@ The primary purpose of this project is to create a writeup web app I can use any
 <h4>Data Collection + Persistence</h4>
 <img src="assets\examples\input_log_persistence.gif" alt="Data Collection + Persistence" width="250"/><br>
 
+<h4>Writeup add sections + delete</h4>
+<img src="assets\examples\writeup-add-sections.gif" alt="Writeup add sections + delete" width="250"/><br>
+
 ## Files
 ```text
 |-- README.md
