@@ -33,15 +33,15 @@
                     <h2 class="text-xl font-bold text-gray-900 mb-4">Details</h2>
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-sm font-medium test-gray-700 mb-2">Event name</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Event name</label>
                             <input type="text" id="ctfEvent" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="ex: MetaCTF">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium test-gray-700 mb-2">Challenge</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Challenge</label>
                             <input type="text" id="challenge" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="ex: Find the Flag">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium test-gray-700 mb-2">Points</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Points</label>
                             <input type="text" id="points" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="ex: 100">
                         </div>
                     </div>
@@ -53,12 +53,12 @@
                     <h2 class="text-xl font-bold text-gray-900 mb-4">How</h2>
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Section Title</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
                             <input type="text" id="sectionTitle" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="ex: Recon">
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Content</label>
-                            <textarea id="sectionContent" rows="6" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="ex: Used nmap to scan ports of x.x.x.x/24 and got x result.."></textarea>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Content</label>
+                            <textarea id="sectionContent" rows="6" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="ex: Decided to google the organization and see what was available through basic OSINT..."></textarea>
                         </div>
                         <button id="addSectionBtn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">+ section</button>
                     </div>
@@ -71,9 +71,54 @@
             </div>     
 
             <div id="toolsContent"style="display: none">
-                <h2>Tools & Resources</h2>
-                <p>TBA</p>
-            </div>     
+                <div class ="bg-white p-6 rounded-lg shadow border">
+                    <h2 class ="text-xl font-bold text-gray-900 mb-4">Tools</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Tool</label>
+                            <input type="text" id="toolName" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="ex: NMAP">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">URL</label>
+                            <input type="text" id="toolUrl" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="ex: https://...com/..">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Why</label>
+                            <textarea id="toolContent" rows="6" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="ex: Used nmap to scan ports of x.x.x.x/24 and got x result.."></textarea>
+                        </div>
+                        <button id="addToolBtn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">+ tool</button>
+                    </div>
+                </div>
+                <!current tools>
+                <div id="toolsList" class="bg-white p-6 rounded-lg shadow border" style="display: none;" >
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Current Tools</h3>
+                    <div id="toolsContainer"></div>
+                </div>
+                <!resources>
+                <div class ="bg-white p-6 rounded-lg shadow border">
+                    <h2 class ="text-xl font-bold text-gray-900 mb-4">Resources</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Resource</label>
+                            <input type="text" id="resName" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="ex: OWASP">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">URL</label>
+                            <input type="text" id="resUrl" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="ex: https://...com/..">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Why</label>
+                            <textarea id="resContent" rows="6" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="ex: Article explaining how xyz works to exploit abc..."></textarea>
+                        </div>
+                        <button id="addResBtn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">+ resource</button>
+                    </div>
+                </div>
+                <!current resources>
+                <div id="resList" class="bg-white p-6 rounded-lg shadow border" style="display: none;" >
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Current Resources</h3>
+                    <div id="resContainer"></div>
+                </div>
+            </div>
 
             <div id="reviewContent"style="display: none">
                 <h2>Export & Review</h2>
@@ -108,8 +153,8 @@
         let writeupData = {
             basicInfo: {},
             sections: [],
-            toosl: [],
-            references: []
+            tools: [],
+            resources: []
         };
 
         function collectBasicInfo(){
@@ -193,6 +238,66 @@
 
         // load
         document.getElementById('addSectionBtn').addEventListener('click', addSection);
+
+        // tools
+        function addTool(){
+            const name = document.getElementById('toolName').value.trim();
+            const content = document.getElementById('toolContent').value.trim();
+            const url = document.getElementById('toolUrl').value.trim();
+
+            // writeup tools and add date/tiem
+            if (name && content && url){
+                writeupData.tools.push({
+                    name: name,
+                    content: content,
+                    url: url,
+                    id: Date.now()
+                });
+
+                // clean up
+                document.getElementById('toolName').value='';
+                document.getElementById('toolContent').value='';
+                document.getElementById('toolUrl').value='';
+                updateToolsList();
+                console.log('tool joy:', writeupData.tools);
+            } else{
+                // add more logging? -jlahire
+                alert('enter tool content')
+            }
+        }
+
+        function updateToolsList(){
+            // shows tool if exists, hides if not
+            const toolsContainer = document.getElementById('toolsContainer');
+            const toolsList = document.getElementById('toolsList');
+            // show
+            if (writeupData.tools.length > 0){
+                toolsList.style.display = 'block';
+                toolsContainer.innerHTML = writeupData.tools.map((tools, index) => `
+                    <div class="border border-gray-200 rounded-lg p-4 mb-3">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-semibold text-gray-800">${tools.name}</h4>
+                                <p class="text-sm text-gray-600 mt-1">${tools.content.substring(0, 100)}${tools.content.length > 100 ? '...' : ''}</p>
+                            </div>
+                            <button onclick="removeTool(${index})" class="text-red-500 hover:text-red-700 text-sm">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+            // hide
+            toolsList.style.display = 'none';
+            }
+        }
+
+        // delete tol
+        function removeTool(index){
+            writeupData.tools.splice(index, 1);
+            updateToolsList();
+        }
+
+        // load
+        document.getElementById('addToolBtn').addEventListener('click', addTool);
 
     </script>
 </body>
