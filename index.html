@@ -25,7 +25,7 @@
                 <nav class="flex space-x-8">
                     <button id="basicTab" class="py-2 px-1 border-b-2 border-blue-500 text-blue-600 font-medium text-sm">Basic Info</button>
                     <button id="writeupTab" class="py-2 px-1 border-b-2 border-blue-500 text-blue-600 font-medium text-sm">Writeup</button>
-                    <button id="toolsTab" class="py-2 px-1 border-b-2 border-blue-500 text-blue-600 font-medium text-sm">Tools</button>
+                    <button id="toolsTab" class="py-2 px-1 border-b-2 border-blue-500 text-blue-600 font-medium text-sm">References</button>
                     <button id="reviewTab" class="py-2 px-1 border-b-2 border-blue-500 text-blue-600 font-medium text-sm">Review</button>
                 </nav>
             </div>
@@ -146,12 +146,14 @@
                         </div>
                     </div>
                     <!export pdf>
-                    <button onclick="generatePDF()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors mb-4">Export PDF</button>
+                    <button onclick="generatePDF()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors mb-4">Export .pdf</button>
+                    <button onclick="generateMD()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors mb-4">Export .md</button>
+                    <button onclick="generateTXT()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors mb-4">Export .txt</button>
                 </div>
             </div>
 
         </div>
-        <h2 class="text-xl text-gray-800">placeholder footer</h2>
+        <h2 class="text-sm text-gray-400">@jlahrie</h2>
     </main>
 
     <!tab stuff>
@@ -279,7 +281,7 @@
                             <div>
                                 <h4 class="font-semibold text-gray-800">${section.title}</h4>
                                 <p class="text-sm text-gray-600 mt-1">${section.content.substring(0, 100)}${section.content.length > 100 ? '...' : ''}</p>
-                                ${section.image ? `<div class="mt-2><img src="${section.image}" alt="${section.imageName}" class="max-w-xs h-auto border rounded"></div>` :''}
+                                ${section.image ? `<div class="mt-2"><img src="${section.image}" alt="${section.imageName}" class="max-w-xs h-auto border rounded"></div>` :''}
                             </div>
                             <button onclick="removeSection(${index})" class="text-red-500 hover:text-red-700 text-sm">Delete</button>
                         </div>
@@ -474,6 +476,7 @@
             `;
         }
 
+        // export .pdf
         async function generatePDF(){
             const { jsPDF } = window.jspdf;
             const element = document.getElementById('pdfPreview');
@@ -495,6 +498,127 @@
                 console.error('pdf no joy: ', error);
                 alert('pdf no joy')
             }
+        }
+
+        // export .md
+        function generateMD() {
+            const markdown = generateMarkdown();
+            const blob = new Blob([markdown], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${writeupData.basicInfo.challenge || 'writeup'}.md`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            alert('md joy');
+        }
+
+        // export .txt
+        function generateTXT() {
+            const text = generateText();
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${writeupData.basicInfo.challenge || 'writeup'}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            alert('txt joy');
+        }
+
+        function generateMarkdown() {
+            const data = writeupData.basicInfo;
+            const date = new Date().toLocaleDateString();
+            
+            let markdown = `# ${data.challenge || 'CTF Challenge'}\n\n`;
+            markdown += `**Event:** ${data.event || 'N/A'}  \n`;
+            markdown += `**Difficulty:** ${data.difficulty || 'N/A'}  \n`;
+            markdown += `**Author:** ${data.author || 'N/A'}  \n`;
+            markdown += `**Date:** ${date}  \n\n`;
+            markdown += `---\n\n`;
+            
+            // sections with images
+            if (writeupData.sections.length > 0) {
+                markdown += `## Solution\n\n`;
+                writeupData.sections.forEach(section => {
+                    markdown += `### ${section.title}\n\n`;
+                    markdown += `${section.content}\n\n`;
+                    if (section.image) {
+                        markdown += `![${section.imageName || 'Image'}](data:image/jpeg;base64,${section.image.split(',')[1]})\n\n`;
+                    }
+                });
+            }
+            
+            // tools
+            if (writeupData.tools.length > 0) {
+                markdown += `## Tools Used\n\n`;
+                writeupData.tools.forEach(tool => {
+                    markdown += `- **[${tool.name}](${tool.url})**: ${tool.content}\n`;
+                });
+                markdown += `\n`;
+            }
+            
+            // resources
+            if (writeupData.resources.length > 0) {
+                markdown += `## References\n\n`;
+                writeupData.resources.forEach(resource => {
+                    markdown += `- **[${resource.name}](${resource.url})**: ${resource.content}\n`;
+                });
+                markdown += `\n`;
+            }
+            
+            markdown += `---\n*jlahire writeup tool*\n`;
+            return markdown;
+        }
+
+        function generateText() {
+            const data = writeupData.basicInfo;
+            const date = new Date().toLocaleDateString();
+            
+            let text = `${data.challenge || 'CTF Challenge'}\n`;
+            text += `${'='.repeat((data.challenge || 'CTF Challenge').length)}\n\n`;
+            text += `Event: ${data.event || 'N/A'}\n`;
+            text += `Difficulty: ${data.difficulty || 'N/A'}\n`;
+            text += `Author: ${data.author || 'N/A'}\n`;
+            text += `Date: ${date}\n\n`;
+            
+            // sections
+            if (writeupData.sections.length > 0) {
+                text += `SOLUTION\n${'='.repeat(8)}\n\n`;
+                writeupData.sections.forEach(section => {
+                    text += `${section.title}\n${'-'.repeat(section.title.length)}\n`;
+                    text += `${section.content}\n`;
+                    if (section.image) {
+                        text += `[Image: ${section.imageName || 'img'}]\n`;
+                    }
+                    text += `\n`;
+                });
+            }
+            
+            // tools
+            if (writeupData.tools.length > 0) {
+                text += `TOOLS\n${'='.repeat(5)}\n\n`;
+                writeupData.tools.forEach(tool => {
+                    text += `${tool.name} (${tool.url})\n`;
+                    text += `${tool.content}\n\n`;
+                });
+            }
+            
+            // resources
+            if (writeupData.resources.length > 0) {
+                text += `REFERENCES\n${'='.repeat(10)}\n\n`;
+                writeupData.resources.forEach(resource => {
+                    text += `${resource.name} (${resource.url})\n`;
+                    text += `${resource.content}\n\n`;
+                });
+            }
+            
+            text += `---\njlahire writeup tool\n`;
+            return text;
         }
 
     </script>
