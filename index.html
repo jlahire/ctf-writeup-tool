@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lahire Writeup Tool</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body class="bg-gray-50 min-h-screen">
     <header class="bg-white shadow-sm border-b border-gray-200">
@@ -17,6 +19,7 @@
     
     <main class="max-w-5xl mx-auto py-6 sm:px-6 lg:px-8">
         <div class="space-y-8">
+            
             <!tabs>
             <div class="border-b border-gray-200">
                 <nav class="flex space-x-8">
@@ -123,6 +126,7 @@
             <div id="reviewContent" class="space-y-6" style="display: none">
                 <div class="bg-white p-6 rounded-lg shadow border">
                     <h2 class="text-xl font-bold text-gray-900 mb-4">Export & Review</h2>
+                    <!update preview>
                     <button onclick="updatePreview()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors mb-4">Update Preview</button>
                     <!preview>
                     <div id="pdfPreview" class="border border-gray-300 rounded-lg p-8 bg-white">
@@ -130,6 +134,8 @@
                             <p>hit button to preview writeup</p>
                         </div>
                     </div>
+                    <!export pdf>
+                    <button onclick="generatePDF()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors mb-4">Export PDF</button>
                 </div>
             </div>
 
@@ -416,6 +422,29 @@
                 </div>
                 ${secHTML}
             `;
+        }
+
+        async function generatePDF(){
+            const { jsPDF } = window.jspdf;
+            const element = document.getElementById('pdfPreview');
+
+            try {
+                const canvas = await html2canvas(element, {
+                    scale: 2,
+                    useCORS: true
+                });
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const imgData = canvas.toDataURL('image/png');
+                const imgW = 190;
+                const imgH = (canvas.height * imgW) / canvas.width;
+
+                pdf.addImage(imgData, 'PNG', 10, 10, imgW, imgH);
+                pdf.save(`${writeupData.basicInfo.challenge || 'writeup'}.pdf`);
+                alert('pdf joy');
+            } catch (error){
+                console.error('pdf no joy: ', error);
+                alert('pdf no joy')
+            }
         }
 
     </script>
