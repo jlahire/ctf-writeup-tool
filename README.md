@@ -2,6 +2,10 @@
 
 The primary purpose of this project is to create a writeup web app I can use anywhere and on any device to keep track of CTF progress and easily share my successes and failures with others. The secondary purpose is to showcase taking an idea and building it.
 
+## Demo
+
+https://jlahire.github.io/ctf-writeup-tool/
+
 ## Features
 
 - **Basic Info**: Event name, challenge, difficulty, author
